@@ -16,7 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from PyQt4 import QtGui
+from PyQt5 import QtGui, QtWidgets
 import re
 
 
@@ -127,7 +127,7 @@ def copyVocabDef(definition):
     else:
         result = u'{expression}\t{glossary}\n'.format(**definition)
 
-    QtGui.QApplication.clipboard().setText(result)
+    QtWidgets.QApplication.clipboard().setText(result)
 
 
 def markupKanji(definition):
@@ -141,11 +141,11 @@ def markupKanji(definition):
 
 
 def copyKanjiDef(definition):
-    return QtGui.QApplication.clipboard().setText(u'{character}\t{kunyomi}\t{onyomi}\t{glossary}'.format(**definition))
+    return QtWidgets.QApplication.clipboard().setText(u'{character}\t{kunyomi}\t{onyomi}\t{glossary}'.format(**definition))
 
 
 def buildDefHeader():
-    palette = QtGui.QApplication.palette()
+    palette = QtWidgets.QApplication.palette()
     toolTipBg = palette.color(QtGui.QPalette.Window).name()
     toolTipFg = palette.color(QtGui.QPalette.WindowText).name()
 

@@ -16,14 +16,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from PyQt4 import QtGui
+from PyQt5 import QtGui,QtWidgets
 import constants
 import gen.about_ui
 
 
-class DialogAbout(QtGui.QDialog, gen.about_ui.Ui_DialogAbout):
+class DialogAbout(QtWidgets.QDialog, gen.about_ui.Ui_DialogAbout):
     def __init__(self, parent):
-        QtGui.QDialog.__init__(self, parent)
+        QtWidgets.QDialog.__init__(self, parent)
         self.setupUi(self)
 
         text = unicode(self.labelVersion.text())

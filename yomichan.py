@@ -17,7 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from PyQt4 import QtGui, QtCore
+from PyQt5 import QtGui, QtCore, QtWidgets
 from yomi_base import japanese
 from yomi_base.preference_data import Preferences
 from yomi_base.reader import MainWindowReader
@@ -40,11 +40,11 @@ class YomichanPlugin(Yomichan):
         self.anki = anki_bridge.Anki()
         self.parent = self.anki.window()
 
-        separator = QtGui.QAction(self.parent)
+        separator = QtWidgets.QAction(self.parent)
         separator.setSeparator(True)
         self.anki.addUiAction(separator)
 
-        action = QtGui.QAction(QtGui.QIcon(':/img/img/icon_logo_32.png'), '&Yomichan...', self.parent)
+        action = QtWidgets.QAction(QtGui.QIcon(':/img/img/icon_logo_32.png'), '&Yomichan...', self.parent)
         action.setIconVisibleInMenu(True)
         action.setShortcut('Ctrl+Y')
         action.triggered.connect(self.onShowRequest)
@@ -75,7 +75,7 @@ class YomichanStandalone(Yomichan):
     def __init__(self):
         Yomichan.__init__(self)
 
-        self.application = QtGui.QApplication(sys.argv)
+        self.application = QtWidgets.QApplication(sys.argv)
         self.window = MainWindowReader(
             None,
             self.preferences,
