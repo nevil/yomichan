@@ -16,7 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from PyQt4 import QtGui, QtCore
+from PyQt5 import QtGui, QtCore, QtWidgets
 import about
 import constants
 import gen.reader_ui
@@ -27,7 +27,7 @@ import reader_util
 import update
 
 
-class MainWindowReader(QtGui.QMainWindow, gen.reader_ui.Ui_MainWindowReader):
+class MainWindowReader(QtWidgets.QMainWindow, gen.reader_ui.Ui_MainWindowReader):
     class State:
         def __init__(self):
             self.filename = unicode()
@@ -39,7 +39,7 @@ class MainWindowReader(QtGui.QMainWindow, gen.reader_ui.Ui_MainWindowReader):
 
 
     def __init__(self, parent, preferences, language, filename=None, anki=None, closed=None):
-        QtGui.QMainWindow.__init__(self, parent)
+        QtWidgets.QMainWindow.__init__(self, parent)
         self.setupUi(self)
 
         self.textContent.mouseMoveEvent = self.onContentMouseMove
@@ -115,7 +115,7 @@ class MainWindowReader(QtGui.QMainWindow, gen.reader_ui.Ui_MainWindowReader):
         font = self.textContent.font()
         font.setFamily(self.preferences['fontFamily'])
         font.setPointSize(self.preferences['fontSize'] + self.zoom)
-        self.textContent.setLineWrapMode(QtGui.QPlainTextEdit.WidgetWidth if self.preferences['wordWrap'] else QtGui.QPlainTextEdit.NoWrap)
+        self.textContent.setLineWrapMode(QtWidgets.QPlainTextEdit.WidgetWidth if self.preferences['wordWrap'] else QtWidgets.QPlainTextEdit.NoWrap)
         self.textContent.setFont(font)
 
         self.actionToggleWrap.setChecked(self.preferences['wordWrap'])
@@ -175,7 +175,7 @@ class MainWindowReader(QtGui.QMainWindow, gen.reader_ui.Ui_MainWindowReader):
 
 
     def onActionOpen(self):
-        filename = QtGui.QFileDialog.getOpenFileName(
+        filename = QtWidgets.QFileDialog.getOpenFileName(
             parent=self,
             caption='Select a file to open',
             filter='Text files (*.txt);;All files (*.*)'
@@ -208,7 +208,7 @@ class MainWindowReader(QtGui.QMainWindow, gen.reader_ui.Ui_MainWindowReader):
 
     def onActionPreferences(self):
         dialog = preferences.DialogPreferences(self, self.preferences, self.anki)
-        if dialog.exec_() == QtGui.QDialog.Accepted:
+        if dialog.exec_() == QtWidgets.QDialog.Accepted:
             self.applyPreferencesContent()
 
 
@@ -248,7 +248,7 @@ class MainWindowReader(QtGui.QMainWindow, gen.reader_ui.Ui_MainWindowReader):
         if cursor.hasSelection():
             searchText = cursor.selectedText()
 
-        searchText, ok = QtGui.QInputDialog.getText(self, 'Find', 'Search text:', text=searchText)
+        searchText, ok = QtWidgets.QInputDialog.getText(self, 'Find', 'Search text:', text=searchText)
         if searchText and ok:
             self.findText(searchText)
 
@@ -260,7 +260,7 @@ class MainWindowReader(QtGui.QMainWindow, gen.reader_ui.Ui_MainWindowReader):
 
     def onActionToggleWrap(self, wrap):
         self.preferences['wordWrap'] = wrap
-        self.textContent.setLineWrapMode(QtGui.QPlainTextEdit.WidgetWidth if self.preferences['wordWrap'] else QtGui.QPlainTextEdit.NoWrap)
+        self.textContent.setLineWrapMode(QtWidgets.QPlainTextEdit.WidgetWidth if self.preferences['wordWrap'] else QtWidgets.QPlainTextEdit.NoWrap)
 
 
     def onActionHomepage(self):
@@ -312,7 +312,7 @@ class MainWindowReader(QtGui.QMainWindow, gen.reader_ui.Ui_MainWindowReader):
 
     def onUpdaterSearchResult(self, result):
         if result and unicode(result) > constants.c['appVersion']:
-            QtGui.QMessageBox.information(
+            QtWidgets.QMessageBox.information(
                 self,
                 'Yomichan',
                 'A new version of Yomichan is available for download!\n\nYou can download this update ({0} > {1}) ' \
@@ -321,12 +321,12 @@ class MainWindowReader(QtGui.QMainWindow, gen.reader_ui.Ui_MainWindowReader):
 
 
     def onContentMouseMove(self, event):
-        QtGui.QPlainTextEdit.mouseMoveEvent(self.textContent, event)
+        QtWidgets.QPlainTextEdit.mouseMoveEvent(self.textContent, event)
         self.updateSampleMouseEvent(event)
 
 
     def onContentMousePress(self, event):
-        QtGui.QPlainTextEdit.mousePressEvent(self.textContent, event)
+        QtWidgets.QPlainTextEdit.mousePressEvent(self.textContent, event)
         self.updateSampleMouseEvent(event)
 
 
@@ -337,7 +337,7 @@ class MainWindowReader(QtGui.QMainWindow, gen.reader_ui.Ui_MainWindowReader):
                 content = fp.read()
         except IOError:
             self.setStatus(u'Failed to load file {0}'.format(filename))
-            QtGui.QMessageBox.critical(self, 'Yomichan', 'Cannot open file for read')
+            QtWidgets.QMessageBox.critical(self, 'Yomichan', 'Cannot open file for read')
             return
 
         self.closeFile()
@@ -382,7 +382,7 @@ class MainWindowReader(QtGui.QMainWindow, gen.reader_ui.Ui_MainWindowReader):
             if wrap:
                 self.findText(text)
             else:
-                QtGui.QMessageBox.information(self, 'Yomichan', 'Search text not found')
+                QtWidgets.QMessageBox.information(self, 'Yomichan', 'Search text not found')
         else:
             self.state.searchPosition = index + len(text)
             cursor = self.textContent.textCursor()

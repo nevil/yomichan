@@ -16,14 +16,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from PyQt4 import QtGui, QtCore
+from PyQt5 import QtGui, QtCore, QtWidgets
 import copy
 import gen.preferences_ui
 
 
-class DialogPreferences(QtGui.QDialog, gen.preferences_ui.Ui_DialogPreferences):
+class DialogPreferences(QtWidgets.QDialog, gen.preferences_ui.Ui_DialogPreferences):
     def __init__(self, parent, preferences, anki):
-        QtGui.QDialog.__init__(self, parent)
+        QtWidgets.QDialog.__init__(self, parent)
         self.setupUi(self)
 
         self.accepted.connect(self.onAccept)
@@ -132,11 +132,11 @@ class DialogPreferences(QtGui.QDialog, gen.preferences_ui.Ui_DialogPreferences):
         for i, name in enumerate(fields):
             columns = list()
 
-            itemName = QtGui.QTableWidgetItem(name)
+            itemName = QtWidgets.QTableWidgetItem(name)
             itemName.setFlags(QtCore.Qt.ItemIsSelectable)
             columns.append(itemName)
 
-            itemValue = QtGui.QTableWidgetItem(fieldsPrefs.get(name, unicode()))
+            itemValue = QtWidgets.QTableWidgetItem(fieldsPrefs.get(name, unicode()))
             columns.append(itemValue)
 
             for j, column in enumerate(columns):
@@ -161,14 +161,14 @@ class DialogPreferences(QtGui.QDialog, gen.preferences_ui.Ui_DialogPreferences):
 
 
     def onButtonColorFgClicked(self):
-        color, ok = QtGui.QColorDialog.getRgba(self.preferences['fgColor'], self)
+        color, ok = QtWidgets.QColorDialog.getRgba(self.preferences['fgColor'], self)
         if ok:
             self.preferences['fgColor'] = color
             self.updateSampleText()
 
 
     def onButtonColorBgClicked(self):
-        color, ok = QtGui.QColorDialog.getRgba(self.preferences['bgColor'], self)
+        color, ok = QtWidgets.QColorDialog.getRgba(self.preferences['bgColor'], self)
         if ok:
             self.preferences['bgColor'] = color
             self.updateSampleText()
